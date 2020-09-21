@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require('mongoose');
+const cors = require('cors');
 const DB_URL = "mongodb://admin:admin123@ds343718.mlab.com:43718/calculator";
 const routes = require('./routes/api');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -20,12 +22,6 @@ mongoose
     .catch((e) => {
         console.log('Connection failed');
     });
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
 
 app.use('/api', routes);
 
